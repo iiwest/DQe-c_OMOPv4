@@ -7,11 +7,27 @@ date: "May 2016"
 This document is a guide to run DQe-c program. DQe-c program is a component of the DQe project (Data Quality Explorer) that evaluates completeness in clinical data. The version of DQe-c described in this document is customized for OMOP version 4 common data model.
 
 ###Program Elements and Flows
-Figure 1 visualizes the workflow for DQe-c.
+DQe-c is comprised of seven R scripts, a flat file (.csv) that stores OMOP V4 table and column names, an R markdown document, and a `reports` directory in which the program stores its reports. Figure 1 visualizes the workflow for DQe-c.  
 
 
 ![](gitfigs/DQe-c_flow.png)
 Figure 1. DQe-c Workflow
+
+R scripts are annotated with necessary descriptions for understanding the codes and being able to modify them. This document mainly focuses on how the program runs and what different elements of it do. For more details see the notes inside the R scripts.
+
+#### The OMOP Reference Table :`DQTBL_v4.csv`
+DQe-c reads the OMOP data, performs its analyses, and stores its results based on the reference table that is stored in as `DQTBL_v4.csv`.
+`DQTBL_v4.csv` includes table and column names from OMOP V4 CDM, as well as level of importance, and abbreviations for each table name.
+The table below presents a few rows of the `DQTBL_v4.csv`:
+
+TabNam | ColNam | DQLVL | abbr
+------ | ------ | ----- | ----
+person | person_id | X | prsn
+provider |	specialty_concept_id | L	| prvd
+location |	location_id	| H |	loc
+condition_occurrence |	condition_source_value	| M	| cndoc
+
+Table:  A snapshot of `DQTBL_v4.csv`.
 
 
 ###Contact
