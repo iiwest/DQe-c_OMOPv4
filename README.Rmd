@@ -2,6 +2,9 @@
 title: "DQe-c For OMOP V4 CDM"
 author: "Hossein Estiri"
 date: "May 2016"
+output: 
+  html_document: 
+    toc: yes
 ---
 ###Introduction
 This document is a guide to run DQe-c program. DQe-c program is a component of the DQe project (Data Quality Explorer) that evaluates completeness in clinical data. The version of DQe-c described in this document is customized for OMOP version 4 common data model.
@@ -15,7 +18,7 @@ Figure 1. DQe-c Workflow
 
 R scripts are annotated with necessary descriptions for understanding the codes and being able to modify them. This document mainly focuses on how the program runs and what different elements of it do. For more details see the notes inside the R scripts.
 
-#### The OMOP Reference Table :`DQTBL_v4.csv`
+#### The OMOP Reference Table: `DQTBL_v4.csv`
 DQe-c reads the OMOP data, performs its analyses, and stores its results based on the reference table that is stored in as `DQTBL_v4.csv`.
 `DQTBL_v4.csv` includes table and column names from OMOP V4 CDM, as well as level of importance, and abbreviations for each table name.
 The table below presents a few rows of the `DQTBL_v4.csv`:
@@ -28,6 +31,49 @@ location |	location_id	| H |	loc
 condition_occurrence |	condition_source_value	| M	| cndoc
 
 Table:  A snapshot of `DQTBL_v4.csv`.
+
+Level of importance (`DQLVL`) and abbreviation for table name (`abbr`) are for use in the data quality issue flag generation and visualization purposes. `DQLVL` is manually determined for each data quality issue. In case of completeness (or missingness), it implies how important missingness in a certain column of the data might be -- in 4 levels of:
+
+  * `X` = extremely important
+  * `H` = Highly important
+  * `M` = Mildly important
+  * `L` = low importance
+  
+Determination of levels of importance in this version of DQe-c is based on OMOP V4 data model. All Primary Key, Foriegn Key, and required columns should be highly important, when missingness is the issue to evalue.  `DQLVL` can vary from L to X or M depending to the table and column. 
+
+`abbr` or table name abbreviation was determined manually.
+
+#### Reading the Data
+
+Two scripts are used to read data via ODBC connection. First, `Con.R` establishes the ODBC connection to postgreSQL database using `RPostgreSQL` package. Once connection is established, the list of tables included in the database are compared with the list of table names in OMOP V5 CDM and only table names that exist in OMOP V5 are kept and saved in the report folder for the record as `tablelist_usrnm_date(formatted: d-m-Y)` -- where `usrnm` is the username for ODBC connection that was set up in `keys.R`.
+
+Next, `Comp_prep.R` reads in and processes the OMOP data using an automated function. It also uses another function to create a table of the tables loaded with information about their size and number of rows. The table will then be used to report the empty tables and load details table (saved under the report directory as `lead_details_usrnm_date(formatted: d-m-Y)`)that is used to generate table 1 and figures 1-3 on the `Report.html` document.  
+
+#### The Two Tests
+1. The Data Model Test: `dmtest.R` -- 
+The data model test is a baseline test platform to conduct test on the data model. The current script counts frequencies and unique frequencies in all columns of all tables provided, and produces a comparison test on key variables. `dmtest.R` compares number of unique frequencies in columns that are repeated in different OMOP tables. For example, `person_id` is common in `person`, `observation`, `visit_occurence`, `drug_exposure`, `procedure_occurrence`, and `condition_occurrence`. However, `person` table is the source table for `person_id` and therefore number of unique `person_id`s should in, for instance, `observation` table should not exceed the same number from `person` table. This test compares all these cases and produces a table in the report directory as `DM_usrnm_date(formatted: d-m-Y)`. The reported table will then be used to generate visualizations in the final report document.
+
+2. Flagging the Missing Cells: `Comp_test.R` -- 
+The main completeness test happens with the script. Loops in this script go through every cell of every column of every table and flag cells that are either NULL/NA or empty strings. The flag includes the following elements as a character:
+
+* Level of importance: `LVL`
+* Abbreviation of table name: `abbr`
+* A code for issue: `MS1` for NULL/NA and `MS2` for smpty strings
+* Primary key value of the table for the row with flagged cell
+* Column number of the table for the row with flagged cell
+* Date of the test
+
+The script then adds the missingness frequencies and precentages to a Master Data Quality Table that is built on `DQTBL_v4.csv`.
+
+
+#### Creating the Reports
+There are two directories under the `report` directory.
+#### The Report Html
+
+
+
+
+
 
 
 ###Contact
