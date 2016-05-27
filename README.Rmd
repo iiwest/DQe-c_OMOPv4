@@ -65,7 +65,10 @@ The main completeness test happens with the script. Loops in this script go thro
 
 The script then adds the missingness frequencies and precentages to a Master Data Quality Table that is built on `DQTBL_v4.csv`.
 
+#### Creating Issue Tables
+The script `Comp_Issues.R` first saves the Master Data Quality Table produced by the previous two scripts under mstabs directory under reports as `DQ_Master_Table_usrnm_date(formatted: d-m-Y)`. These tables are created and dated each time a new load comes in and then the data inside the mstabs directory will be used to compared loads. The code for comparison between the load is also in this script. For comparison between load, last section of codes in this script reads all Master Data Quality Tables that have been stored in mstabs directory, binds them together, and creates a new table for visualization in the `Report.html`.
 
+`Comp_Issues.R` then creates reports of the list of flagged cells all together runder report directory as `flagged_cells_usrnm_date(formatted: d-m-Y)` (which is a big table), and for each table separately under the flagtabs directory as `flagtabs/flagged_cells_TABLENAME_usrnm_date(formatted: d-m-Y)`.
 #### Creating the Reports
 There are two directories under the `report` directory.
 #### The Report Html
