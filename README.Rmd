@@ -69,8 +69,26 @@ The script then adds the missingness frequencies and precentages to a Master Dat
 The script `Comp_Issues.R` first saves the Master Data Quality Table produced by the previous two scripts under mstabs directory under reports as `DQ_Master_Table_usrnm_date(formatted: d-m-Y)`. These tables are created and dated each time a new load comes in and then the data inside the mstabs directory will be used to compared loads. The code for comparison between the load is also in this script. For comparison between load, last section of codes in this script reads all Master Data Quality Tables that have been stored in mstabs directory, binds them together, and creates a new table for visualization in the `Report.html`.
 
 `Comp_Issues.R` then creates reports of the list of flagged cells all together runder report directory as `flagged_cells_usrnm_date(formatted: d-m-Y)` (which is a big table), and for each table separately under the flagtabs directory as `flagtabs/flagged_cells_TABLENAME_usrnm_date(formatted: d-m-Y)`.
+
 #### Creating the Reports
-There are two directories under the `report` directory.
+There are two sub-directories under the `report` directory. As mentioned, all outputs are saved as .csv files and also names in a way that demonstrate name of the file, date of creation, and the user who created the file (`TableName_UserName_Date`). These files are then used in the output .html document for generation visualizations and more. 
+
+![](gitfigs/reports.png)
+Figure 2. The two sub-directories under the `report` directory.
+
+Most of the discussed outputs are directly saved to the `report` directory. Every run of DQe-c will produce the following .csv files under the `report` directory:
+
+* A data model file -- `DM_usrnm_date(formatted: d-m-Y)`  -- see the section about the Two Tests
+* A load details file -- `lead_details_usrnm_date(formatted: d-m-Y)` -- see the section on Reading the Data 
+* A file containing empty tables -- `empty_tablelist_usrnm_date(formatted: d-m-Y)`
+* A file containing list of tables provided -- `tablelist_usrnm_date(formatted: d-m-Y)` -- produced by the `Comp_prep.R` script
+* A frequency comparison file -- `FRQ_comp_usrnm_date(formatted: d-m-Y)` -- this file is produced by binding the Master Data Quality tables in each load and is used in the .html report for visualization.
+* A list of all flags -- `flagged_cells_usrnm_date(formatted: d-m-Y)` -- see section on Creating Issue Tables. This table usually gets really large in size
+
+The list of all flags are also provided by OMOP table, which are saved in the directory `flagtabs`.
+
+The `mstabs` directory is where Master Data Quality tables (over loads) are stored at. the frequency comparison file that was described here basically takes primary key columns from all Master Data Quality tables that are produced over time and saved under the `mstabs` directory and binds them together for comparison purposes.
+
 #### The Report Html
 
 
