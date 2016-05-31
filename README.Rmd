@@ -6,10 +6,10 @@ output:
   html_document: 
     toc: yes
 ---
-###Introduction
+## Introduction
 This document is a guide to run DQe-c program. DQe-c program is a component of the DQe project (Data Quality Explorer) that evaluates completeness in clinical data. The version of DQe-c described in this document is customized for OMOP version 4 common data model.
 
-###Program Elements and Flows
+## Program Elements and Flows
 DQe-c is comprised of seven R scripts, a flat file (.csv) that stores OMOP V4 table and column names, an R markdown document, and a `reports` directory in which the program stores its reports. Figure 1 visualizes the workflow for DQe-c.  
 
 
@@ -18,7 +18,7 @@ Figure 1. DQe-c Workflow
 
 R scripts are annotated with necessary descriptions for understanding the codes and being able to modify them. This document mainly focuses on how the program runs and what different elements of it do. For more details see the notes inside the R scripts.
 
-#### The OMOP Reference Table: `DQTBL_v4.csv`
+### The OMOP Reference Table: `DQTBL_v4.csv`
 DQe-c reads the OMOP data, performs its analyses, and stores its results based on the reference table that is stored in as `DQTBL_v4.csv`.
 `DQTBL_v4.csv` includes table and column names from OMOP V4 CDM, as well as level of importance, and abbreviations for each table name.
 The table below presents a few rows of the `DQTBL_v4.csv`:
@@ -43,13 +43,13 @@ Determination of levels of importance in this version of DQe-c is based on OMOP 
 
 `abbr` or table name abbreviation was determined manually.
 
-#### Reading the Data
+### Reading the Data
 
 Two scripts are used to read data via ODBC connection. First, `Con.R` establishes the ODBC connection to postgreSQL database using `RPostgreSQL` package. Once connection is established, the list of tables included in the database are compared with the list of table names in OMOP V5 CDM and only table names that exist in OMOP V5 are kept and saved in the report folder for the record as `tablelist_usrnm_date(formatted: d-m-Y)` -- where `usrnm` is the username for ODBC connection that was set up in `keys.R`.
 
 Next, `Comp_prep.R` reads in and processes the OMOP data using an automated function. It also uses another function to create a table of the tables loaded with information about their size and number of rows. The table will then be used to report the empty tables and load details table (saved under the report directory as `lead_details_usrnm_date(formatted: d-m-Y)`)that is used to generate table 1 and figures 1-3 on the `Report.html` document.  
 
-#### The Two Tests
+### The Two Tests
 1. The Data Model Test: `dmtest.R` -- 
 The data model test is a baseline test platform to conduct test on the data model. The current script counts frequencies and unique frequencies in all columns of all tables provided, and produces a comparison test on key variables. `dmtest.R` compares number of unique frequencies in columns that are repeated in different OMOP tables. For example, `person_id` is common in `person`, `observation`, `visit_occurence`, `drug_exposure`, `procedure_occurrence`, and `condition_occurrence`. However, `person` table is the source table for `person_id` and therefore number of unique `person_id`s should in, for instance, `observation` table should not exceed the same number from `person` table. This test compares all these cases and produces a table in the report directory as `DM_usrnm_date(formatted: d-m-Y)`. The reported table will then be used to generate visualizations in the final report document.
 
@@ -65,15 +65,16 @@ The main completeness test happens with the script. Loops in this script go thro
 
 The script then adds the missingness frequencies and precentages to a Master Data Quality Table that is built on `DQTBL_v4.csv`.
 
-#### Creating Issue Tables
+### Creating Issue Tables
 The script `Comp_Issues.R` first saves the Master Data Quality Table produced by the previous two scripts under mstabs directory under reports as `DQ_Master_Table_usrnm_date(formatted: d-m-Y)`. These tables are created and dated each time a new load comes in and then the data inside the mstabs directory will be used to compared loads. The code for comparison between the load is also in this script. For comparison between load, last section of codes in this script reads all Master Data Quality Tables that have been stored in mstabs directory, binds them together, and creates a new table for visualization in the `Report.html`.
 
 `Comp_Issues.R` then creates reports of the list of flagged cells all together runder report directory as `flagged_cells_usrnm_date(formatted: d-m-Y)` (which is a big table), and for each table separately under the flagtabs directory as `flagtabs/flagged_cells_TABLENAME_usrnm_date(formatted: d-m-Y)`.
 
-#### Creating the Reports
+### Creating the Reports
 There are two sub-directories under the `report` directory. As mentioned, all outputs are saved as .csv files and also names in a way that demonstrate name of the file, date of creation, and the user who created the file (`TableName_UserName_Date`). These files are then used in the output .html document for generation visualizations and more. 
 
 ![](gitfigs/reports.png)
+
 Figure 2. The two sub-directories under the `report` directory.
 
 Most of the discussed outputs are directly saved to the `report` directory. Every run of DQe-c will produce the following .csv files under the `report` directory:
@@ -89,13 +90,15 @@ The list of all flags are also provided by OMOP table, which are saved in the di
 
 The `mstabs` directory is where Master Data Quality tables (over loads) are stored at. the frequency comparison file that was described here basically takes primary key columns from all Master Data Quality tables that are produced over time and saved under the `mstabs` directory and binds them together for comparison purposes.
 
-#### The Report Html
+### The `Report.html`and `Report.Rmd`
+
+To present its output, DQe-c uses R Markdown to produce a .html document -- `Report.html`. This report is generated from data stored under the `report` directory (As described in the previous section), so there is no need to run the entire program to renew the report document. However, it reads the data with updated dates, which means that the report can not be reproduced in a date other than the date the test was run without modifying the file names under the `report` directory -- which is not recommended.
+
+Code to produce the `Report.html` is in the R Markdown file, `Report.Rmd`. The code is annotated in the R Markdown document and also there is explicit descriptions provided in the .html report document.
+
+### Running DQe-c
+To run DQe-c, you only need to execute `Run.R`. All scripts are programmed to follow their prequesite script. Before executing `Run.R`, however, make sure that username and password are stored in `Keys.R` and that `Con.R` has all ODBC connection information to your OMOP V4 PostgreSQL database.
 
 
-
-
-
-
-
-###Contact
+## info
 for questions and/or inquiries contact `hestiri at uw . edu`
