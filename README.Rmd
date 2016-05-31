@@ -2,8 +2,9 @@
 title: "DQe-c For OMOP V4 CDM"
 author: "Hossein Estiri"
 date: "May 2016"
-output: 
-  html_document: 
+output:
+  word_document: default
+  html_document:
     toc: yes
 ---
 ## Introduction
@@ -88,7 +89,9 @@ Most of the discussed outputs are directly saved to the `report` directory. Ever
 
 The list of all flags are also provided by OMOP table, which are saved in the directory `flagtabs`.
 
-The `mstabs` directory is where Master Data Quality tables (over loads) are stored at. the frequency comparison file that was described here basically takes primary key columns from all Master Data Quality tables that are produced over time and saved under the `mstabs` directory and binds them together for comparison purposes.
+The `mstabs` directory is where Master Data Quality tables (over loads) are stored at. the frequency comparison file that was described here basically takes primary key columns from all Master Data Quality tables that are produced over time and saved under the `mstabs` directory and binds them together for comparison purposes. 
+
+**Make sure that no file other than the Master Data Quality tables are stored in the `mstabs` directory.**
 
 ### The `Report.html`and `Report.Rmd`
 
