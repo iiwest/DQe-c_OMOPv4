@@ -1,6 +1,3 @@
-# ---------------------------------------------------------------------------------------
-###ssh tunel:        ssh -N -L localhost:5432:omop.iths.org:5432 hestiri@remote.iths.org
-# ---------------------------------------------------------------------------------------
 
 ### Install and load all libraries 
 if (!require("data.table")) install.packages('data.table')
