@@ -1,5 +1,5 @@
 #####################################################################################################################################
-######## This script connects your R to your OMOP postgreSQL database and saves the preliminary data needed for further analysis.  ##
+####### This script connects your R to your OMOP postgreSQL database and saves the preliminary data needed for further analysis.  ##
 
 
 # read username and password
