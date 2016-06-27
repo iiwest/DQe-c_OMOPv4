@@ -2,7 +2,7 @@
 ###preparations to run the analysis
 ####################################
 
-source("Con.R")
+source("Connect.R")
 ##reading and storing OMOP tables
 for (i in 1:length(OMOPtbls)) assign(OMOPtbls[i], dbGetQuery(con,paste("select * from omop.",OMOPtbls[i],"",sep="")))
 
