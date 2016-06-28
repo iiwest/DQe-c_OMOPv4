@@ -117,15 +117,16 @@ datatable(DQTBL[,c("TabNam","ColNam","DQLVL","test_date","FRQ","UNIQFRQ","MS1_FR
 ```
 
 ### Table 3. A Small Sample of Flags
-Table below presents 200 random sample of the flags generated and saved for missing values/cells.
+If the test is being run on flag generating mode,table below presents 200 random sample of the flags generated and saved for missing values/cells.
 
 The data for this table is being sampled from tables under `reports` directory, `Data_Quality_Issue` codes are saved by table (under `flagtabs` directory) and alltogether as `r paste("flagged_cells_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep="")`
 
 ```{r, echo=FALSE, warning=FALSE}
-
+if (Flag_rmd == "TRUE"){
 DQ_ISSUES_rep <- read.csv(paste("reports/flagged_cells_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
 DQ_ISSUES_rep <- DQ_ISSUES_rep[sample(nrow(DQ_ISSUES_rep), 200), ]
 datatable(DQ_ISSUES_rep[3], options = list(pageLength = 3))
+}
 ```
 
 
