@@ -127,6 +127,7 @@ DQ_ISSUES_rep <- read.csv(paste("reports/flagged_cells_",usrnm,"_",as.character(
 DQ_ISSUES_rep <- DQ_ISSUES_rep[sample(nrow(DQ_ISSUES_rep), 200), ]
 datatable(DQ_ISSUES_rep[3], options = list(pageLength = 3))
 }
+
 ```
 
 
