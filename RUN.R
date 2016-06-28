@@ -17,22 +17,30 @@ if (!require("reshape2")) install.packages('reshape2')
 if (!require("visNetwork")) install.packages('visNetwork')
 if (!require("rmdformats")) devtools::install_github("juba/rmdformats")
 if (!require("visNetwork")) devtools::install_github("datastorm-open/visNetwork")
-
-
-
-
+if (!require("ggbeeswarm")) devtools::install_github("eclarke/ggbeeswarm")
 
 
 
 
 ##Now first run the test
-source("Comp_Issues.R")
+
+## Do you want to flag missing values and store the flags?
+## default is FALSE, as it adds to the processing time and requires more disk space and RAM.
+Flag <- "FALSE" # vs. "TRUE"
+if (Flag == "TRUE"){
+  source("Comp_test_flag.R")
+} else {
+  source("Comp_test.R")
+}
+
+
+
 ## then generate the html report
 rmarkdown::render("Report.Rmd")
 
 
-rm(ISSUES_care_site,ISSUES_condition_occurrence,ISSUES_drug_exposure,ISSUES_location,
-   ISSUES_observation,ISSUES_organization,ISSUES_person,ISSUES_procedure_occurrence,
-   ISSUES_provider,ISSUES_visit_occurrence)
-
-rm(DQ_ISSUES)
+if (Flag == "TRUE"){
+  rm(ISSUES_care_site,ISSUES_condition_occurrence,ISSUES_drug_exposure,ISSUES_location,
+     ISSUES_observation,ISSUES_organization,ISSUES_person,ISSUES_procedure_occurrence,
+     ISSUES_provider,ISSUES_visit_occurrence,DQ_ISSUES)
+}
