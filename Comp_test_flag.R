@@ -79,11 +79,6 @@ for (j in 1: length(unique(DQTBL$TabNam)))
 
 
 
-
-
-
-
-
 ################################################################
 ####This loop goes through all tables and columns in each tables and generates a code for the "" (nothing) values
 ###############################################################
@@ -221,6 +216,14 @@ DQ_ISSUES <- data.frame(DQ_ISSUES)
 names(DQ_ISSUES) <- c("DQ_ISSUE_CODE")
 ##saving all error cells is one table, DQ_ISSUES
 write.csv(DQ_ISSUES, file = paste("reports/flagged_cells_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
+
+
+
+##calculating percent missing compared to the entire rows in each column/table
+DQTBL$MSs_PERC <- round((DQTBL$MS1_FRQ+DQTBL$MS2_FRQ)/DQTBL$FRQ,2)
+##saving the master DQ table
+write.csv(DQTBL, file = paste("reports/mstabs/DQ_Master_Table_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
+
 
 
 ##### Creating FRQ_comp table to compare frequencies from MSDQ table over time.
