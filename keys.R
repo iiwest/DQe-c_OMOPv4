@@ -9,3 +9,5 @@ pss_OMOP <- "TYPE YOUR ODBC PASSWORD HERE"
 # who is running the test?
 tester <- "TYPE YOUR NAME HERE"
 
+## setting the flagging parameter for the .Rmd file
+Flag_rmd <- Flag
