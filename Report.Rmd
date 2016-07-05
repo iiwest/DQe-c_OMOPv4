@@ -59,7 +59,7 @@ treemap(omp,
 ```
 
 
-### Figure 3. Loaded tables agains OMOP V4 Relational Model.
+### Figure 3. Loaded tables against OMOP V4 Relational Model.
 The figure below shows a network visualization of the OMOP V4 data model, as well as highlighting the tables that are available in this load (legend is the same as in Figure 1).
 ```{r, echo=FALSE, fig.align='center', fig.width= 10}
 dat.net <- read.csv(paste("reports/load_details_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
