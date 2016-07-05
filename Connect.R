@@ -32,6 +32,7 @@ list <- dbListTables(con)
 
 # pick OMOP tables from all tables provided
 OMOPtbls <- subset(list, list %in% OMOPV5)
+OMOPtbls <- unique(OMOPtbls)
 
 # create a version of the list to save as a .csv table
 OMOPtbls2 <- data.frame(OMOPtbls)
