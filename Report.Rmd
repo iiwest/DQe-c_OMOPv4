@@ -182,9 +182,11 @@ for (i in seq_along(table_list)) {
     #     ggtitle("Frequency of Missing Data") +
     xlab("Column") +
     ylab("Frequency") +
-    theme(plot.title = element_text(family = "Trebuchet MS", color="#666666", face="bold", hjust=0)) +
-    # theme(legend.position="none") + 
-    ggtitle(paste('Percentage of Missing Data in "', table_list[i], '" table', sep=''))
+    theme(plot.title = element_text(family = "Trebuchet MS", color="#666666", face="bold", hjust=0),
+          axis.text.x = element_text(vjust = 1),
+          strip.text.x = element_text(angle = 90, face="bold")) +
+    theme(axis.text.x=element_blank())+    # theme(legend.position="none") + 
+    ggtitle(paste('Ratio of Missing Data in "', table_list[i], '" table', sep=''))
   
 }
 
@@ -275,6 +277,31 @@ plot6 <- ggplot(data=organization_id, aes(x=TabNam, y=UNIQFRQ)) +
   xlab(" Table Name") +
   ylab("Frequency of Unique Values")
 (gg <- ggplotly(plot6))
+```
+
+##Test of Completeness in Key Clinical Indicators
+
+### Figure 5. Common Key Variables
+Figure 5 shows the parcentage of patients missing specific key clinical indicators. 
+
+```{r, echo=FALSE, fig.align='center', fig.height= 5, fig.width= 10}
+withouts <- read.csv(paste("reports/withouts_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
+  
+ggplot(withouts, aes(x=missing,y=reorder(group,-missing), label = perc)) + 
+    geom_point(aes(fill = missing),shape = 21, colour = "black",  size = 8, stroke = 3, alpha = 0.9) +
+    # geom_point(aes(fill = missing),shape = 21, colour = "black", fill= "white", size = 5, stroke = 5) +
+    # geom_label(aes(fill = missing), colour = "white", fontface = "bold", vjust = 0, nudge_y = -0.1, size = 5)+
+#     geom_label(vjust = 0, nudge_y = 0.2, size = 4)+
+    geom_text(vjust = 0, nudge_y = 0.4, size = 4)+
+    
+    scale_fill_gradient(limits=c(0, 100),low="#FFFAF0", high="#EE2C2C", guide=F,na.value="white")+
+    # theme_grey(base_size = base_size) + 
+    labs(x = "", y = "") +
+    scale_x_continuous(limits = c(0, 100)) + 
+    theme_minimal() +
+    theme(panel.grid.major.y = element_line(color = "gray",size = 2.5),
+          panel.grid.major.x = element_line(colour = "black", linetype = "dotted"),
+          axis.text.y=element_text(size=20, face="bold")) 
 ```
 
 
