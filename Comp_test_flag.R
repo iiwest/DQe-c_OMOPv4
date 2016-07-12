@@ -111,7 +111,7 @@ for (j in 1: length(unique(DQTBL$TabNam)))
     dt <- DQIMPLVL[,5]
     #extracted the testing date from column 5 of the sunsetted row
     
-    TBL[,col] <- ifelse(TBL[,col] == "", 
+    TBL[,col] <- ifelse((nzchar(TBL[,col]) == "FALSE" & !(is.null(TBL[,col]) | is.na(TBL[,col]))), 
                         paste(LVL,"_",abbr,"_","MS2","_",TBL[,1],"_",which(colnames(TBL)== col),"_",dt,
                               sep=""),TBL[,col])
     ##calculating flag values to replace NAs and NULLs 
