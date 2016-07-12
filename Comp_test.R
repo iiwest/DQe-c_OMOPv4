@@ -63,7 +63,7 @@ for (j in 1: length(unique(DQTBL$TabNam)))
     ##now going through the columns of table j
   {
     col <- names(get(TB))[i]
-    Sub2 <- nrow(subset(TBL, TBL[,col] == ""))
+    Sub2 <- nrow(TBL[(nzchar(TBL[,col]) == "FALSE" & !(is.null(TBL[,col]) | is.na(TBL[,col]))), ])
     ##calculated number of rows with empty string (missingness) 
     DQTBL$MS2_FRQ <- ifelse(DQTBL$ColNam == col & DQTBL$TabNam == NAM, Sub2, DQTBL$MS2_FRQ )
     ##stored frequency of DQ issues (missingness here) in the culumn MS2_FRQ
