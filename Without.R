@@ -34,9 +34,9 @@ withoutit <- function(data,col1,col2,list,denominator) {
   
   message(d2+d00, "% of patients are missing ", list.name," information.",appendLF=T)
   if (d10 > 0) message(d1, " unique patient ids not available in the source table.",appendLF=T)
-  if (d20 > 5) message(d20, "% of patients have at least 1 missing ", list.name," mapped concept id in ",df.name, " table.",appendLF=T)
-  if (d2 != d20 & d2 > 5) message("of the ",d2+d00,"%, ", d2, "% miss ", list.name," mapped concept ids in ",df.name, " table.",appendLF=T)
-  if (d00 > 5) message("of the ",d2+d00,"%, ",d00, "% don't have a mapped ", list.name," 'record' in ",df.name, " table.",appendLF=T)
+  message(d20, "% of patients have at least 1 missing ", list.name," mapped concept id in ",df.name, " table.",appendLF=T)
+  if (d2 != d20) message("of the ",d2+d00,"%, ", d2, "% miss ", list.name," mapped concept ids in ",df.name, " table.",appendLF=T)
+  message("of the ",d2+d00,"%, ",d00, "% don't have a ", list.name," record in ",df.name, " table.",appendLF=T)
   output <- data.frame(group=list.name, missing = d2+d00)
   return(output)
   rm(NO,NO2,YES,dat0,dat01,d1,dat02)
@@ -108,12 +108,11 @@ withoutthem <- function(data,col1,col2,list,denominator) {
   condition_occurrence$with <- NULL
   
   
-  ###### WHAT COLUMN TO USE HERE????/
   #Encounter -------------
   visit_occurrence$with <- "YES"
-  visit_occurrence$with <- ifelse((visit_occurrence$place_of_service_source_value == "" | (is.na(visit_occurrence$place_of_service_source_value))), "NO", visit_occurrence$with)
+  visit_occurrence$with <- ifelse((visit_occurrence$care_site_id == "" | (is.na(visit_occurrence$care_site_id))), "NO", visit_occurrence$with)
   encounter <- c("YES")
-  
+
   without_encounter <- withoutit(data = visit_occurrence,col1 = "with",col2 = "person_id", list = encounter, denominator = people_count)
   visit_occurrence$with <- NULL
 
@@ -124,10 +123,7 @@ withoutthem <- function(data,col1,col2,list,denominator) {
   ##########
   #############
   #select the list you want
-  weight <- c("4160730","4266234","2108540","G0447","2414358","2314318","40664664","2314334","2721533","29463-7","2514539","2721541","4251889","4263540",
-              "4321901","4173300","40664776","2514530","4262007","4213783","2514532","4141278","4179959","4074323","2514538","4144250","2721530","4251752",
-              "4052041","4189231","4306538","2514531","2721534","2314319","2414360","4109240","3025315","4300732","4009679","2314320","4041982","40664618",
-              "4254477","2721535","2514533")
+  weight <- c("29463-7","3025315")
   without_weight <- withoutthem(data = observation,col1 = "observation_concept_id","person_id",list=weight, denominator=people_count)
   
   height <- c("8302-2","3036277","146")
