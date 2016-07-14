@@ -292,7 +292,7 @@ ggplot(withouts, aes(x=missing,y=reorder(group,-missing), label = perc)) +
     # geom_point(aes(fill = missing),shape = 21, colour = "black", fill= "white", size = 5, stroke = 5) +
     # geom_label(aes(fill = missing), colour = "white", fontface = "bold", vjust = 0, nudge_y = -0.1, size = 5)+
 #     geom_label(vjust = 0, nudge_y = 0.2, size = 4)+
-    geom_text(vjust = 0, nudge_y = 0.4, size = 4)+
+    geom_text(vjust = -0.5, hjust = -.38, nudge_y = 0, size = 4)+
     
     scale_fill_gradient(limits=c(0, 100),low="#FFFAF0", high="#EE2C2C", guide=F,na.value="white")+
     # theme_grey(base_size = base_size) + 
