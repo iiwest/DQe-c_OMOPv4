@@ -138,14 +138,14 @@ Data for the figure is stored in `r paste("FRQ_comp_",usrnm,"_",as.character(for
 ```{r, echo=FALSE, warning=FALSE,  message=FALSE, fig.align='center', fig.height= 10,  fig.width= 10}
 comp <- read.csv(paste("reports/FRQ_comp_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
   
-ggplot(comp, aes(x=test_date, y=log(UNIQFRQ), group = ColNam) ) + 
-  geom_line(aes(), alpha = 0.4,  size = 1.5, show.legend = FALSE) + 
+ggplot(comp, aes(x=reorder(test_date,test_date), y=UNIQFRQ, group = ColNam) ) + 
+  geom_line(aes(), alpha = 0.4,  size = 1, show.legend = FALSE) + 
   stat_smooth(colour = "red",level=0.99) +
   geom_point( alpha = 0.5, shape = 1, size = 6, colour = "#FF3333", stroke = 2, show.legend = FALSE) + 
   geom_point( aes(col = test_date), shape = 20, size = 8,   show.legend = T) + 
   theme(plot.title = element_text(family = "Trebuchet MS", color="#666666", face="bold", hjust=0)) +
-  xlab("Load") + ylab("Log of Unique Counts") + 
-  facet_wrap(~TabNam, ncol = 3, switch = "x") +
+  xlab("Load") + ylab("Unique Counts") + 
+  facet_wrap(~TabNam, ncol = 3, switch = "x", scales = "free") +
   theme(axis.text.x=element_text(colour="white", size = 0.1))
 ```
 
@@ -306,7 +306,7 @@ ggplot(withouts, aes(x=missing,y=reorder(group,-missing), label = perc)) +
 
 
 ##info
-This is report is from DQe-c version 1.6
+This is report is from DQe-c version 1.7
 
 For questions and/or inquiries email: `hestiri@uw.edu`
 
