@@ -20,6 +20,8 @@ if (!require("visNetwork")) devtools::install_github("datastorm-open/visNetwork"
 if (!require("ggbeeswarm")) devtools::install_github("eclarke/ggbeeswarm")
 
 
+## enter the organization name you are running the test on
+org <- "the_organization_name"
 
 
 ##Now first run the test
