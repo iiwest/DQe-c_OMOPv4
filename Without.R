@@ -164,7 +164,7 @@ withoutthem <- function(data,col1,col2,list,denominator) {
   }
   withouts$perc <- percent(withouts$missing)
   withouts$organization <- org
-  withouts$test_date <- test_date
+  withouts$test_date <- as.character(format(Sys.Date(),"%m-%d-%Y"))
   
   write.csv(withouts, file = paste("reports/withouts_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
   ## make another copy in the comparison directory for comparison
