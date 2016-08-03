@@ -27,17 +27,17 @@ withoutit <- function(data,col1,col2,list,denominator) {
   dat02 <- rbind(dat0,NO)
   dat02 <- subset(person, person$person_id %in% dat02$person_id)
 
-  d00 <- round((d00/denominator)*100,4)
+  d001 <- round((d00/denominator)*100,4)
   d2 <- round((nrow(NO2)/denominator)*100,4)
   d20 <- round((nrow(NO)/denominator)*100,4)
   
   
-  message(d2+d00, "% of patients are missing ", list.name," information.",appendLF=T)
+  message(d2+d001, "% of patients are missing ", list.name," information.",appendLF=T)
   if (d10 > 0) message(d1, " unique patient ids not available in the source table.",appendLF=T)
   message(d20, "% of patients have at least 1 missing ", list.name," mapped concept id in ",df.name, " table.",appendLF=T)
-  if (d2 != d20) message("of the ",d2+d00,"%, ", d2, "% miss ", list.name," mapped concept ids in ",df.name, " table.",appendLF=T)
-  message("of the ",d2+d00,"%, ",d00, "% don't have a ", list.name," record in ",df.name, " table.",appendLF=T)
-  output <- data.frame(group=list.name, missing = d2+d00)
+  if (d2 != d20) message("of the ",d2+d001,"%, ", d2, "% miss ", list.name," mapped concept ids in ",df.name, " table.",appendLF=T)
+  message("of the ",d2+d001,"%, ",d001, "% don't have a ", list.name," record in ",df.name, " table.",appendLF=T)
+  output <- data.frame(group=list.name, missing = d2+d001,missingpop=(nrow(NO2)+d00),denom=denominator)
   return(output)
   rm(NO,NO2,YES,dat0,dat01,d1,dat02)
 }
@@ -52,12 +52,12 @@ withoutthem <- function(data,col1,col2,list,denominator) {
   
   dat0 <- data.frame(person_id=unique(subset(people_id$ids, !(people_id$ids %in% dat[,col2]))))
   d00 <- length(dat0$person_id)
-  d00 <- round((d00/denominator)*100,4)
+  d001 <- round((d00/denominator)*100,4)
   d1 <- ifelse(dim(dat)[1] == "0","0",length(unique(subset(dat[,col2], !(dat[,col2] %in% people_id$ids)))))
   
-  message(d00, "% of unique patients don't have a '", list.name,"' record in ",df.name, " table.",appendLF=T)
+  message(d001, "% of unique patients don't have a '", list.name,"' record in ",df.name, " table.",appendLF=T)
   if (d1 > 0) message(d1, " unique patient ids not available in the source table.",appendLF=T)
-  output <- data.frame(group=list.name, missing = d00)
+  output <- data.frame(group=list.name, missing = d001, missingpop=d00,denom=denominator)
   return(output)
   rm(dat,dat0)
 }
@@ -130,32 +130,32 @@ withoutthem <- function(data,col1,col2,list,denominator) {
   without_height <- withoutthem(data = observation,col1 = "observation_concept_id","person_id",list=height, denominator=people_count)
   
 
-  BP <- c("8462-4","FND_BPS","3012888","FND_BPD","275944005","3004249","8480-6")
+  blood_pressure <- c("8462-4","FND_BPS","3012888","FND_BPD","275944005","3004249","8480-6")
   without_BP <- withoutthem(data = observation,col1 = "observation_concept_id","person_id",list=BP, denominator=people_count)
   
-#   smoking <- c(
-#     "40664586","2108525","SOC_Smoker","8392000","77176002","393644001","4298794","40664492","40756893","4222303","42740578","2617852",
-#     "2617806","8517006","2514535","2721536","2514539","SOC_TobCess","44805624","2108526","4293153","2617449","40298679","440012000",
-#     "44808272","225323000","SOC_NonSmoker","138001004","4254340","4254477","4310250","40664474","44808270","4257068","40572072","4248981",
-#     "393646004","40572070","40664513","2617959","4206526","44808273","2721262","2721265","SOC_TobCess","SOC_PastSmoker","2721530","2617450","4021160",
-#     "2514534","2514538","PROC1_TobCess","4237483")
-#   without_smoking <- withoutthem(data = observation,col1 = "observation_concept_id","person_id",list=smoking, denominator=people_count)
-#   
-#   
-#   alcohol <- c(
-#     "F10.180","F10.27", "F10.959","F10.988","2108674","SOC_ALCOHOL HEAVY USE","2617464","F10.282","4265900",
-#     "F10.280","F10.19", "SOC_ALCOHOL COUNSEL","F10.981","2007785","F10.21", "F10.250","4275257","F10.221",
-#     "413473000","2618108","F10.229","F10.239","F10.230","2108871","303.92", "F10.121","F10.232","F10.281","303.91", 
-#     "2514536","F10.220","F10.120","303",    "303.9",  "F10.188","F10.94","F10.920","2721634","4261832","F10.151",
-#     "SOC_ALCOHOL LIGHT USE","F10.99","2007787","4164527","F10.950","F10.259","4064043","F10.982","F10.288","F10.20",
-#     "F10.980","303.02", "F10.129","F10.159","2514537","40664725","F10.96", "F10.24", "F10.14", "F10.182","F10.929",
-#     "F10.251","2007786","4211325","F10.97", "F10.921","F10.231","303.93", "F10.29", "F10.10", "2617465","303.01","F10.150" 
-#   )
-#   without_alcohol <- withoutthem(data = observation,col1 = "observation_concept_id","person_id",list=alcohol, denominator=people_count)
+  smoking <- c(
+    "40664586","2108525","SOC_Smoker","8392000","77176002","393644001","4298794","40664492","40756893","4222303","42740578","2617852",
+    "2617806","8517006","2514535","2721536","2514539","SOC_TobCess","44805624","2108526","4293153","2617449","40298679","440012000",
+    "44808272","225323000","SOC_NonSmoker","138001004","4254340","4254477","4310250","40664474","44808270","4257068","40572072","4248981",
+    "393646004","40572070","40664513","2617959","4206526","44808273","2721262","2721265","SOC_TobCess","SOC_PastSmoker","2721530","2617450","4021160",
+    "2514534","2514538","PROC1_TobCess","4237483")
+  without_smoking <- withoutthem(data = observation,col1 = "observation_concept_id","person_id",list=smoking, denominator=people_count)
+  
+  
+  alcohol <- c(
+    "F10.180","F10.27", "F10.959","F10.988","2108674","SOC_ALCOHOL HEAVY USE","2617464","F10.282","4265900",
+    "F10.280","F10.19", "SOC_ALCOHOL COUNSEL","F10.981","2007785","F10.21", "F10.250","4275257","F10.221",
+    "413473000","2618108","F10.229","F10.239","F10.230","2108871","303.92", "F10.121","F10.232","F10.281","303.91", 
+    "2514536","F10.220","F10.120","303",    "303.9",  "F10.188","F10.94","F10.920","2721634","4261832","F10.151",
+    "SOC_ALCOHOL LIGHT USE","F10.99","2007787","4164527","F10.950","F10.259","4064043","F10.982","F10.288","F10.20",
+    "F10.980","303.02", "F10.129","F10.159","2514537","40664725","F10.96", "F10.24", "F10.14", "F10.182","F10.929",
+    "F10.251","2007786","4211325","F10.97", "F10.921","F10.231","303.93", "F10.29", "F10.10", "2617465","303.01","F10.150" 
+  )
+  without_alcohol <- withoutthem(data = observation,col1 = "observation_concept_id","person_id",list=alcohol, denominator=people_count)
   
   
   withouts <- rbind(without_encounter,without_diagnosis,without_medication,without_ethnicity,without_race,without_gender,without_weight,
-                    without_height,without_BP)
+                    without_height,without_BP,without_smoking,without_alcohol)
   
   
   #a function to print out percentages for the text labels
@@ -163,8 +163,12 @@ withoutthem <- function(data,col1,col2,list,denominator) {
     paste0(formatC(x, format = format, digits = digits, ...), "%")
   }
   withouts$perc <- percent(withouts$missing)
+  withouts$organization <- org
+  withouts$test_date <- test_date
   
   write.csv(withouts, file = paste("reports/withouts_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
+  ## make another copy in the comparison directory for comparison
+  # write.csv(withouts, file = paste("reports/withouts_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
   
   
   
