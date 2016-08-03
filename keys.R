@@ -11,3 +11,6 @@ tester <- "TYPE YOUR NAME HERE"
 
 ## setting the flagging parameter for the .Rmd file
 Flag_rmd <- Flag
+
+## reading organization name
+org <- org
