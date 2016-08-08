@@ -6,23 +6,23 @@ source("Connect.R")
 ##reading and storing OMOP tables
 for (i in 1:length(OMOPtbls)) assign(OMOPtbls[i], dbGetQuery(con,paste("select * from omop.",OMOPtbls[i],"",sep="")))
 
-if(length(person)!= 0) person <- person[,1:14]  #removing extra columns
-if(length(provider)!= 0) provider <- provider[,1:7]  #removing extra columns
-if(length(care_site)!= 0) care_site <- care_site[,1:6]  #removing extra columns
-if(length(organization)!= 0) organization <- organization[,1:5]  #removing extra columns
-if(length(location)!= 0) location <- location[,1:8]  #removing extra columns
-if(length(drug_era)!= 0) drug_era <- drug_era[,1:7]  #removing extra columns
-if(length(death)!= 0) death <- death[,1:5]  #removing extra columns
-if(length(drug_exposure)!= 0) drug_exposure <- drug_exposure[,1:15]  #removing extra columns
-if(length(visit_occurrence)!= 0) visit_occurrence <- visit_occurrence[,1:7]  #removing extra columns
-if(length(observation)!= 0) observation <- observation[,1:17]  #removing extra columns
-if(length(observation_period)!= 0) observation_period <- observation_period[,1:4]  #removing extra columns
-if(length(payer_plan_period)!= 0) payer_plan_period <- payer_plan_period[,1:7]  #removing extra columns
-if(length(condition_occurrence)!= 0) condition_occurrence <- condition_occurrence[,1:10]  #removing extra columns
-if(length(procedure_occurrence)!= 0) procedure_occurrence <- procedure_occurrence[,1:9]  #removing extra columns
-if(length(procedure_cost)!= 0) procedure_cost <- procedure_cost[,1:14]  #removing extra columns
-if(length(cohort)!= 0) cohort <- cohort[,1:6]  #removing extra columns
-if(length(condition_era)!= 0) condition_era <- condition_era[,1:7]  #removing extra columns
+# if(length(person)!= 0) person <- person[,1:14]  #removing extra columns
+# if(length(provider)!= 0) provider <- provider[,1:7]  #removing extra columns
+# if(length(care_site)!= 0) care_site <- care_site[,1:6]  #removing extra columns
+# if(length(organization)!= 0) organization <- organization[,1:5]  #removing extra columns
+# if(length(location)!= 0) location <- location[,1:8]  #removing extra columns
+# if(length(drug_era)!= 0) drug_era <- drug_era[,1:7]  #removing extra columns
+# if(length(death)!= 0) death <- death[,1:5]  #removing extra columns
+# if(length(drug_exposure)!= 0) drug_exposure <- drug_exposure[,1:15]  #removing extra columns
+# if(length(visit_occurrence)!= 0) visit_occurrence <- visit_occurrence[,1:7]  #removing extra columns
+# if(length(observation)!= 0) observation <- observation[,1:17]  #removing extra columns
+# if(length(observation_period)!= 0) observation_period <- observation_period[,1:4]  #removing extra columns
+# if(length(payer_plan_period)!= 0) payer_plan_period <- payer_plan_period[,1:7]  #removing extra columns
+# if(length(condition_occurrence)!= 0) condition_occurrence <- condition_occurrence[,1:10]  #removing extra columns
+# if(length(procedure_occurrence)!= 0) procedure_occurrence <- procedure_occurrence[,1:9]  #removing extra columns
+# if(length(procedure_cost)!= 0) procedure_cost <- procedure_cost[,1:14]  #removing extra columns
+# if(length(cohort)!= 0) cohort <- cohort[,1:6]  #removing extra columns
+# if(length(condition_era)!= 0) condition_era <- condition_era[,1:7]  #removing extra columns
 
 ##store test date in mm-YYYY format
 test_date <- as.character(format(Sys.Date(),"%m-%Y"))
