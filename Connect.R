@@ -20,18 +20,16 @@ rm(pss_OMOP)
 ######## If you don't know your data base name, host, or port, contact your OMOP server administrator.
 #######
 
-# create a vector of OMOP V5 tables
-OMOPV5 <- c("attribute_definition", "care_site", "cdm_source", "cohort", "cohort_attribute", "cohort_definition", "concept", "concept_ancestor", "concept_class", 
-"concept_relationship", "concept_synonym", "condition_era", "condition_occurrence", "death", "device_cost", "device_exposure", "domain", "dose_era",
-"drug_cost", "drug_era", "drug_exposure", "drug_strength", "fact_relationship", "location", "measurement", "note", "observation", "observation_period", 
-"payer_plan_period", "person", "procedure_cost", "procedure_occurrence", "provider", "relationship", "source_to_concept_map", "specimen", "visit_cost", 
-"visit_occurrence", "vocabulary", "organization")  ###organization table doesn't exist in OMOP v5 CDM and thus needs to be removed if/when we seitch to OMOP 5
+# create a vector of OMOP V4 tables -- to switch to OMOP v5, this needs to be updated
+OMOPV4 <- c("care_site", "cohort", "condition_era", "condition_occurrence", "death", "drug_cost", "drug_era", "drug_exposure", 
+            "location", "observation", "observation_period", "payer_plan_period", "person", "procedure_cost", "procedure_occurrence", 
+            "provider", "visit_occurrence", "organization")  
 
 # create a list of tables in the PostgreSQL database
 list <- dbListTables(con)
 
 # pick OMOP tables from all tables provided
-OMOPtbls <- subset(list, list %in% OMOPV5)
+OMOPtbls <- subset(list, list %in% OMOPV4)
 OMOPtbls <- unique(OMOPtbls)
 
 # create a version of the list to save as a .csv table
