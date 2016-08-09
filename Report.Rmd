@@ -225,7 +225,7 @@ plot2 <- ggplot(data=person_id, aes(x=reorder(TabNam, UNIQFRQ), y=UNIQFRQ)) +
 ```{r, echo=FALSE, fig.align='center', fig.height= 3, fig.width= 10}
 care_site_id<- filter(DQTBL_KEYS, ColNam == "care_site_id")
 
-plot3 <- ggplot(data=care_site_id, aes(x=TabNam, y=UNIQFRQ)) +
+plot3 <- ggplot(data=care_site_id, aes(x=reorder(TabNam, UNIQFRQ), y=UNIQFRQ)) +
   geom_bar(stat="identity", width = 1, aes(fill=Index)) +
   scale_fill_manual(values=c("darkolivegreen3","firebrick1", "springgreen3")) +
   ggtitle(paste("Count of Unique ",unique(care_site_id$ColNam)," in Tables with ",unique(care_site_id$ColNam),
@@ -240,7 +240,7 @@ plot3 <- ggplot(data=care_site_id, aes(x=TabNam, y=UNIQFRQ)) +
 
 visit_occurrence_id<- filter(DQTBL_KEYS, ColNam == "visit_occurrence_id")
 
-plot4 <- ggplot(data=visit_occurrence_id, aes(x=TabNam, y=UNIQFRQ)) +
+plot4 <- ggplot(data=visit_occurrence_id, aes(x=reorder(TabNam, UNIQFRQ), y=UNIQFRQ)) +
   geom_bar(stat="identity", width = 1, aes(fill=Index)) +
   scale_fill_manual(values=c("darkolivegreen3","firebrick1", "springgreen3")) +
   ggtitle(paste("Count of Unique ",unique(visit_occurrence_id$ColNam)," in Tables with ",unique(visit_occurrence_id$ColNam),
@@ -254,7 +254,7 @@ plot4 <- ggplot(data=visit_occurrence_id, aes(x=TabNam, y=UNIQFRQ)) +
 ```{r, echo=FALSE, fig.align='center', fig.height= 3, fig.width= 10}
 location_id<- filter(DQTBL_KEYS, ColNam == "location_id")
 
-plot5 <- ggplot(data=location_id, aes(x=TabNam, y=UNIQFRQ)) +
+plot5 <- ggplot(data=location_id, aes(x=reorder(TabNam, UNIQFRQ), y=UNIQFRQ)) +
   geom_bar(stat="identity", width = 1, aes(fill=Index)) +
   scale_fill_manual(values=c("darkolivegreen3","firebrick1", "springgreen3")) +
   ggtitle(paste("Count of Unique ",unique(location_id$ColNam)," in Tables with ",unique(location_id$ColNam),
@@ -269,7 +269,7 @@ plot5 <- ggplot(data=location_id, aes(x=TabNam, y=UNIQFRQ)) +
 ```{r, echo=FALSE, fig.align='center', fig.height= 3, fig.width= 10}
 organization_id<- filter(DQTBL_KEYS, ColNam == "organization_id")
 
-plot6 <- ggplot(data=organization_id, aes(x=TabNam, y=UNIQFRQ)) +
+plot6 <- ggplot(data=organization_id, aes(x=reorder(TabNam, UNIQFRQ), y=UNIQFRQ)) +
   geom_bar(stat="identity", width = 1, aes(fill=Index)) +
   scale_fill_manual(values=c("darkolivegreen3","firebrick1", "springgreen3")) +
   ggtitle(paste("Count of Unique ",unique(organization_id$ColNam)," in Tables with ",unique(organization_id$ColNam),
