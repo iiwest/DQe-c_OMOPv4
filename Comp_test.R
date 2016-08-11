@@ -78,6 +78,11 @@ DQTBL$MSs_PERC <- round((DQTBL$MS1_FRQ+DQTBL$MS2_FRQ)/DQTBL$FRQ,2)
 ##saving the master DQ table
 write.csv(DQTBL, file = paste("reports/mstabs/DQ_Master_Table_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
 
+##saving a copy for aggregated analysis, if the aggregated analysis add-on is installed.
+DQTBL$organization <- org
+DQTBL$test_date <- as.character(format(Sys.Date(),"%m-%d-%Y"))
+#set the PATH below to aggregatted analysis directory
+# write.csv(DQTBL, file = paste("PATH/DQ_Master_Table_",org,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
 
 
 
