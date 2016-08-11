@@ -1,6 +1,6 @@
 source("Comp_prep.R")
 
-source("Without.R")
+
 #############################################################################
 ##A loop to go through all columns in all tables and count number of rows 
 ##Results will be stored in column "FRQ" of the DQTBL table
