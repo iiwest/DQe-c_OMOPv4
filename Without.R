@@ -1,4 +1,24 @@
+source("dmtest.R")
 ### finding out how many patients don't have specific health records.
+
+
+###if this script is being table-driven (if there is a vocabulary table with all search items:
+# read username and password
+# source("keys.R")
+# 
+# # set up connection
+# drv2 <- dbDriver("PostgreSQL")
+# vocab <- dbConnect(drv2,
+#                    dbname = "RENAME", ##name of the database
+#                    host = "RENAME", ##database host
+#                    port = ADD PORT,
+#                    user = usrnm, #assuming user and password are the same as the odbc connection to the main database
+#                    password = pss_OMOP
+# )
+# rm(pss_OMOP)
+
+
+
 
 ### set the denominator
 #total patients for which date of birth is available
@@ -124,6 +144,14 @@ withoutthem <- function(data,col1,col2,list,denominator) {
   #############
   #select the list you want
   weight <- c("29463-7","3025315")
+  
+        #   if table-driven, then a query from postgresql database will read the codes to search. repeat it for all 
+        # items. something like below:
+          #   weight <- c(dbGetQuery(vocab,"select concept_id from rz.repository_2 
+          #                        where code_system in ('OMOP') AND value_set_id in (select value_set_id from rz.category 
+          #                          where measure_name in  ('Weight'))")$concept_id)
+    
+  
   without_weight <- withoutthem(data = observation,col1 = "observation_concept_id","person_id",list=weight, denominator=people_count)
   
   height <- c("8302-2","3036277","146")
