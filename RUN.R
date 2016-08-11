@@ -24,16 +24,14 @@ if (!require("ggbeeswarm")) devtools::install_github("eclarke/ggbeeswarm")
 org <- "the_organization_name"
 
 
-##Now first run the test
-
 ## Do you want to flag missing values and store the flags?
 ## default is FALSE, as it adds to the processing time and requires more disk space and RAM.
 Flag <- "FALSE" # vs. "TRUE"
-if (Flag == "TRUE"){
-  source("Comp_test_flag.R")
-} else {
-  source("Comp_test.R")
-}
+
+##Now first run the test
+source("Without.R")
+
+ifelse (Flag == "TRUE", source("Comp_test_flag.R"), source("Comp_test.R"))
 
 
 
@@ -46,3 +44,6 @@ if (Flag == "TRUE"){
      ISSUES_observation,ISSUES_organization,ISSUES_person,ISSUES_procedure_occurrence,
      ISSUES_provider,ISSUES_visit_occurrence,DQ_ISSUES)
 }
+
+dbDisconnect(con)
+rm(list = ls())
