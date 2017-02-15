@@ -143,7 +143,7 @@ withoutthem <- function(data,col1,col2,list,denominator) {
   ##########
   #############
   #select the list you want
-  weight <- c("29463-7","3025315")
+  weight <- c("29463-7","3025315", "FND_WTKG", "FND_WTLB") 
   
         #   if table-driven, then a query from postgresql database will read the codes to search. repeat it for all 
         # items. something like below:
@@ -154,7 +154,7 @@ withoutthem <- function(data,col1,col2,list,denominator) {
   
   without_weight <- withoutthem(data = observation,col1 = "observation_concept_id","person_id",list=weight, denominator=people_count)
   
-  height <- c("8302-2","3036277","146")
+  height <- c("8302-2","3036277","146", "FND_HTCM", "FND_HTIN")
   without_height <- withoutthem(data = observation,col1 = "observation_concept_id","person_id",list=height, denominator=people_count)
   
 
@@ -177,8 +177,8 @@ withoutthem <- function(data,col1,col2,list,denominator) {
     "2514536","F10.220","F10.120","303",    "303.9",  "F10.188","F10.94","F10.920","2721634","4261832","F10.151",
     "SOC_ALCOHOL LIGHT USE","F10.99","2007787","4164527","F10.950","F10.259","4064043","F10.982","F10.288","F10.20",
     "F10.980","303.02", "F10.129","F10.159","2514537","40664725","F10.96", "F10.24", "F10.14", "F10.182","F10.929",
-    "F10.251","2007786","4211325","F10.97", "F10.921","F10.231","303.93", "F10.29", "F10.10", "2617465","303.01","F10.150" 
-  )
+    "F10.251","2007786","4211325","F10.97", "F10.921","F10.231","303.93", "F10.29", "F10.10", "2617465","303.01","F10.150", 
+    "SOC_ALCOHOL NONE / NEVER USED", "SOC_ALCOHOL USE AMT UNKNOWN")
   without_alcohol <- withoutthem(data = observation,col1 = "observation_concept_id","person_id",list=alcohol, denominator=people_count)
   
   
