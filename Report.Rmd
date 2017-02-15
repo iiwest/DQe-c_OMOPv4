@@ -18,7 +18,7 @@ source("keys.R");rm(pss_OMOP)
 #####Test was run on `r Sys.Date()` 
 
 ### Table 1. List and Status of OMOP Tables in this load
-The table bolow provides a list of OMOP tables provided (and not provided) in this load.
+The table below provides a list of OMOP tables provided (and not provided) in this load.
 
 The source data this table and the following graphics in this section are being generated from is `r paste("tablelist_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep="")`
 ```{r, echo=FALSE, fig.align='center', fig.width= 10}
@@ -29,7 +29,7 @@ datatable(select(omp, OMOP_Tables, availability, Size, Rows, Columns), options =
 
 
 ### Figure 1. Available Tables, Compared to all OMOP V4 Tables
-This figure shows which of the 18 OMOP V4 tables was received (and not received. 
+This figure shows which of the 18 OMOP V4 tables was received (and not received). 
 ```{r, echo=FALSE, fig.align='center', fig.width= 10}
 treemap(omp,
         index=c("OMOP_Tables"),
@@ -282,7 +282,7 @@ plot6 <- ggplot(data=organization_id, aes(x=reorder(TabNam, UNIQFRQ), y=UNIQFRQ)
 ##Test of Completeness in Key Clinical Indicators
 
 ### Figure 5. Common Key Variables
-Figure 5 shows the parcentage of patients missing specific key clinical indicators. 
+Figure 5 shows the percentage of patients missing specific key clinical indicators. 
 
 ```{r, echo=FALSE, fig.align='center', fig.height= 5, fig.width= 10}
 withouts <- read.csv(paste("reports/withouts_",usrnm,"_",as.character(format(Sys.Date(),"%d-%m-%Y")),".csv", sep=""))
